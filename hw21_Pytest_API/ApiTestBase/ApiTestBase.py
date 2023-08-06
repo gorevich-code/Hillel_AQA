@@ -7,6 +7,7 @@ from requests import Session
 
 class Auth:
     """Class which contains USERS API commands"""
+
     @staticmethod
     def logout(session: Session, basic_api_url: str, get_status: bool = True) -> Union[requests.Response, str]:
         """Authorization API Method which Ends up user session. Clears session cookies"""
@@ -69,6 +70,7 @@ class TestDataProcessor:
 
         :arg data_source str json file name
         :return Dictionary with data for user Sign UP
+
         """
         test_data = cls._get_test_data_from_json(data_source)
         return SignUpUserDataModel(
@@ -85,6 +87,7 @@ class TestDataProcessor:
         :arg data_source str json file name
         :arg remember_option_status: Default False
         :return Dictionary with data for user Sign IN
+
         """
         test_data = cls._get_test_data_from_json(data_source)
         return {
@@ -96,6 +99,7 @@ class TestDataProcessor:
 
 class SignUpUserDataModel:
     """Class which defines required fields for user SignUp"""
+
     def __init__(self, name, lastName, email, password, repeatPassword):
         self.name = name
         self.lastName = lastName
