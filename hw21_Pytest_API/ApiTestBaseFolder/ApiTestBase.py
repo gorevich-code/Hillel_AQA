@@ -12,19 +12,19 @@ class Auth:
     def logout(session: Session, basic_api_url: str) -> json:
         """Authorization API Method which Ends up user session. Clears session cookies"""
 
-        return session.get(url=basic_api_url+'/auth/logout').json()
+        return session.get(url=basic_api_url + "/auth/logout").json()
 
     @staticmethod
     def signup(session: Session, basic_api_url: str, data: Dict[str, Any]) -> json:
         """Authorization API Method which Registers NEW users in the system"""
 
-        return session.post(url=basic_api_url+'/auth/signup', data=data).json()
+        return session.post(url=basic_api_url + "/auth/signup", data=data).json()
 
     @staticmethod
     def signin(session: Session, basic_api_url: str, data: Dict[str, Any]) -> json:
         """Authorization API Method which Registers EXISTING users in the system"""
 
-        return session.post(url=basic_api_url+'/auth/signin', data=data).json()
+        return session.post(url=basic_api_url + "/auth/signin", data=data).json()
 
 
 class Users:
@@ -32,17 +32,16 @@ class Users:
     def current(session: Session, basic_api_url: str) -> json:
         """Users API Method which authorization API Method which Registers EXISTING users in the system"""
 
-        return session.get(url=basic_api_url+'/users/current').json()
+        return session.get(url=basic_api_url + "/users/current").json()
 
     @staticmethod
     def delete_user(session: Session, basic_api_url: str) -> json:
         """Users API Method which Deletes user's account and current user session"""
 
-        return session.delete(url=basic_api_url+'/users').json()
+        return session.delete(url=basic_api_url + "/users").json()
 
 
 class TestDataProcessor:
-
     @staticmethod
     def _get_test_data_from_json(data_source: str):
         """Method which get data from json file"""
@@ -53,19 +52,19 @@ class TestDataProcessor:
     @staticmethod
     def _get_sign_up_data(test_data):
         return {
-            'name': test_data["name"],
-            'lastName': test_data["lastName"],
-            'email': test_data["email"],
-            'password': test_data["password"],
-            'repeatPassword': test_data["repeatPassword"],
+            "name": test_data["name"],
+            "lastName": test_data["lastName"],
+            "email": test_data["email"],
+            "password": test_data["password"],
+            "repeatPassword": test_data["repeatPassword"],
         }
 
     @staticmethod
     def _get_sign_in_data(test_data, remember_option_status: bool = False):
         return {
-            'email': test_data["email"],
-            'password': test_data["password"],
-            'remember': str(remember_option_status)
+            "email": test_data["email"],
+            "password": test_data["password"],
+            "remember": str(remember_option_status),
         }
 
     @staticmethod
@@ -74,17 +73,14 @@ class TestDataProcessor:
         return [
             TestDataProcessor._get_sign_up_data(test_data),
             TestDataProcessor._get_sign_in_data(
-                test_data,
-                remember_option_status=remember_option_status_sign_in)]
-
-
+                test_data, remember_option_status=remember_option_status_sign_in
+            ),
+        ]
 
 
 class ApiTestBaseClass:
     """Class which contains basic data to provide API testing"""
+
     session = requests.session()
     url = "https://qauto2.forstudy.space/api"
-    data_source = 'ApiTestBaseFolder/test_data/valid_user_data.json'
-
-
-
+    data_source = "ApiTestBaseFolder/test_data/valid_user_data.json"
