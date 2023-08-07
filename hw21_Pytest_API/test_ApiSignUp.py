@@ -4,13 +4,17 @@ from ApiTestBase.ApiTestBase import Auth, Users, ApiTestBaseClass
 class TestSignUp(ApiTestBaseClass):
     """Test class which contain SignUP tests with using API"""
 
-    def setup_method(self):
+    def setup_class(self):
         """Method Prepare NOT registered test user
         Try to sign IN and delete test account if test user is registered
 
         """
         if Auth.signin(session=self.session, basic_api_url=self.url, data=self.valid_signin_data) == "ok":
             Users.delete_user(session=self.session, basic_api_url=self.url, get_status=False)
+
+    def setup_method(self):
+        """Method reset sign UP credentials to default"""
+
         self.valid_signup_test_data = self.valid_signup_data
 
     def test_sign_up_valid_data(self):
@@ -32,5 +36,5 @@ class TestSignUp(ApiTestBaseClass):
 
     def teardown_method(self):
         """Method delete test user after each case"""
-
+        Auth.signin(session=self.session, basic_api_url=self.url, data=self.valid_signup_test_data, get_status=False)
         Users.delete_user(session=self.session, basic_api_url=self.url, get_status=False)

@@ -4,12 +4,15 @@ from ApiTestBase.ApiTestBase import Auth, Users, ApiTestBaseClass
 class TestSignIn(ApiTestBaseClass):
     """Test class which contain SignIN tests with using API"""
 
-    def setup_method(self):
-        """Method Prepare registered test user
-         Resets sign IN data to valid for each test
+    def setup_class(self):
+        """Method Prepare registered test user and clean test session"""
 
-        """
-        Auth.signup(session=self.session, basic_api_url=self.url, data=self.valid_signup_data)
+        Auth.signup(session=self.session, basic_api_url=self.url, data=self.valid_signup_data, get_status=False)
+        Auth.logout(session=self.session, basic_api_url=self.url, get_status=False)
+
+    def setup_method(self):
+        """Method reset sign IN credentials to default"""
+
         self.signin_data = self.valid_signin_data
 
     def test_sign_in_valid_data(self):
@@ -29,8 +32,13 @@ class TestSignIn(ApiTestBaseClass):
         assert status != "ok"
 
     def teardown_method(self):
-        """Method which delete test user account"""
+        """Method delete log OUT test user account and clean test session after each test"""
 
-        if Users.current(session=self.session, basic_api_url=self.url) == 'ok':
-            # Auth.logout(session=self.session, basic_api_url=self.url, get_status=False)
-            Users.delete_user(session=self.session, basic_api_url=self.url, get_status=False)
+        Auth.logout(session=self.session, basic_api_url=self.url, get_status=False)
+
+    def teardown_class(self):
+        """Method delete test user account via API"""
+
+        Auth.signin(session=self.session, basic_api_url=self.url, data=self.valid_signin_data)
+        Users.delete_user(session=self.session, basic_api_url=self.url, get_status=False)
+        print('Test users deleted')
