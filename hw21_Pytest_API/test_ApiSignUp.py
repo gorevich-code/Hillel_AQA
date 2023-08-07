@@ -21,7 +21,6 @@ class TestSignUp(ApiTestBaseClass):
         """Test: Try to Sign UP with valid data and assert success status"""
 
         status = Auth.signup(session=self.session, basic_api_url=self.url, data=self.valid_signup_test_data)
-        print('valid_signup_test_data', self.valid_signup_test_data)
         assert status == "ok"
 
     def test_sign_up_invalid_repeat_pass(self):
