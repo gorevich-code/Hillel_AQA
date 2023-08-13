@@ -1,9 +1,4 @@
-from ApiTestBaseFolder.ApiTestBase import (
-    Auth,
-    Users,
-    TestDataProcessor,
-    ApiTestBaseClass,
-)
+from ApiTestBaseFolder.ApiTestBase import Auth, Users, ApiTestBaseClass, CustomApiCalls
 
 
 class TestSignUp(ApiTestBaseClass):
@@ -14,19 +9,10 @@ class TestSignUp(ApiTestBaseClass):
         Try to sign IN and delete test account if test user is registered
 
         """
-        (
-            self.valid_signup_data,
-            self.valid_signin_data,
-        ) = TestDataProcessor.valid_test_data(self.data_source)
-        if (
-            Auth.signin(
-                session=self.session,
-                basic_api_url=self.url,
-                data=self.valid_signin_data,
-            )["status"]
-            == "ok"
-        ):
-            Users.delete_user(session=self.session, basic_api_url=self.url)
+
+        CustomApiCalls.delete_registered_user_via_api(
+            session=self.session, url=self.url, valid_signin_data=self.valid_signin_data
+        )
 
     def setup_method(self):
         """Method reset sign UP credentials to default"""

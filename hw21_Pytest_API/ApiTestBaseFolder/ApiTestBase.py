@@ -83,4 +83,28 @@ class ApiTestBaseClass:
 
     session = requests.session()
     url = "https://qauto2.forstudy.space/api"
-    data_source = "ApiTestBaseFolder/test_data/valid_user_data.json"
+    data_source = r"D:/Courses/Hillel_AQA/Hillel_AQA_homeworks/hw21_Pytest_API/ApiTestBaseFolder/test_data/validUserData.json"
+
+    # Prepare test data
+    (
+        valid_signup_data,
+        valid_signin_data,
+    ) = TestDataProcessor.valid_test_data(
+        data_source, remember_option_status_sign_in=True
+    )
+
+
+class CustomApiCalls(ApiTestBaseClass):
+    @staticmethod
+    def delete_registered_user_via_api(
+        session: Session, url: str, valid_signin_data: Dict
+    ):
+        if (
+            Auth.signin(
+                session=session,
+                basic_api_url=url,
+                data=valid_signin_data,
+            )["status"]
+            == "ok"
+        ):
+            Users.delete_user(session=session, basic_api_url=url)
