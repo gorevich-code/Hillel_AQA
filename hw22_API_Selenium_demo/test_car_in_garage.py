@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from Hillel_AQA_homeworks.hw21_Pytest_API.ApiTestBaseFolder.ApiTestBase import (
+from ..hw_24_API_Selenium_test_project.test_framework_web.api_engine.api_test_base import (
     ApiTestBaseClass,
     Auth,
     CustomApiCalls,
@@ -9,6 +9,7 @@ from Selenuim.ui_tests_base import LoginForm, GarageAddNewCar, GarageMain
 
 
 class TestCarInGarage(ApiTestBaseClass):
+
     def setup_method(self):
         CustomApiCalls.delete_registered_user_via_api(
             session=self.session,
