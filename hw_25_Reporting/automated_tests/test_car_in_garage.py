@@ -2,6 +2,7 @@ from ..test_framework_web.api_engine import Auth, ApiTestBaseClass, CustomApiCal
 from ..test_framework_web.selenium_engine.driver import Driver
 from ..test_framework_web.selenium_engine.pages import GarageMain, GarageAddNewCar, LoginForm, SeleniumBasic
 from ..test_framework_web.test_data import TestDataProcessor
+import allure
 
 
 class TestCarInGarage(ApiTestBaseClass):
@@ -17,16 +18,16 @@ class TestCarInGarage(ApiTestBaseClass):
 
     def test_car_present_in_garage(self):
         driver = self.driver
-        # Step 1
-        request = Auth.signup(
-            session=self.session,
-            basic_api_url=self.url,
-            data=self.valid_signup_data.__dict__,
-        )
-        if request["status"] != "ok":
-            raise Exception(
-                "Step 1: User SignUp Error, Error message %s", request["message"]
+        with allure.step("Proceed sign UP new test user"):
+            request = Auth.signup(
+                session=self.session,
+                basic_api_url=self.url,
+                data=self.valid_signup_data.__dict__,
             )
+            if request["status"] != "ok":
+                raise Exception(
+                    "Step 1: User SignUp Error, Error message %s", request["message"]
+                )
         SeleniumBasic(driver=self.driver).navigate_via_link(
             http_address="https://guest:welcome2qauto@qauto2.forstudy.space/"
         )

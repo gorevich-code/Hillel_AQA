@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 
 from ....test_framework_web.selenium_engine import controls
+import allure
+from allure_commons.types import AttachmentType
 
 
 class GarageMain:
@@ -43,6 +45,7 @@ class GarageMain:
             )
         )
 
+    @allure.step('Observe that at least one car item is present in the garage with specified parameters')
     def check_one_car_is_in_garage(self, brand: str, model: str, mileage: str):
         actual_brand, actual_model = (
             GarageMain(self.driver)
@@ -53,6 +56,7 @@ class GarageMain:
         actual_mileage = (
             GarageMain(self.driver).update_mileage_input().get_attribute("value")
         )
+        allure.attach(self.driver.get_screenshot_as_png(), name='Garage', attachment_type=AttachmentType.PNG)
         return (
             True
             if (
@@ -104,6 +108,7 @@ class GarageAddNewCar:
             )
         )
 
+    @allure.step('Add new car item to the garage with specified parameters')
     def add_new_car_to_garage(
         self,
         brand: str,
@@ -116,5 +121,6 @@ class GarageAddNewCar:
         self.brand_car_selector().select_by_visible_text(brand)
         self.model_car_selector().select_by_visible_text(model)
         self.mileage_text_field().send_keys(mileage)
+        allure.attach(self.driver.get_screenshot_as_png(), name='add New car form', attachment_type=AttachmentType.PNG)
         if click_add_car_to_submit_form:
             self.add_car_submit_btn().click()

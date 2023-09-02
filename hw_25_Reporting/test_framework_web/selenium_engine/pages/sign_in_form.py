@@ -3,6 +3,9 @@ from selenium.webdriver.common.by import By
 from ...selenium_engine import pages
 from ....test_framework_web.selenium_engine import controls
 
+import allure
+from allure_commons.types import AttachmentType
+
 
 class LoginForm:
     def __init__(self, driver):
@@ -29,6 +32,7 @@ class LoginForm:
             )
         )
 
+    @allure.step('Call sign in form, fill it and submit if specified')
     def call_and_fill_sign_in_form(
         self, email: str, password: str, click_login_btn: bool = True
     ):
@@ -37,6 +41,7 @@ class LoginForm:
         LoginForm(self.driver).email_input_field().wait_for_clickable()
         LoginForm(self.driver).email_input_field().send_keys(email)
         LoginForm(self.driver).password_input_field().send_keys(password)
+        allure.attach(self.driver.get_screenshot_as_png(), name='Sign IN form', attachment_type=AttachmentType.PNG)
         if click_login_btn:
             LoginForm(self.driver).login_accept_button().click()
             pages.Header(self.driver).my_profile_button().wait_for_clickable()
