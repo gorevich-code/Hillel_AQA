@@ -1,11 +1,12 @@
-from Hillel_AQA_homeworks.hw_26_sql.models import CustomersModel
+from Hillel_AQA_homeworks.hw_26_sql.models import CustomersModel, OrdersModel
 from Hillel_AQA_homeworks.hw_26_sql.session import session
-import pprint
+
 
 class CustomersRepository:
     def __init__(self):
         self.__session = session
         self.__model = CustomersModel
+        self.customer: CustomersModel
 
     def get_all(self):
         return self.__session.query(self.__model).all()
@@ -13,8 +14,18 @@ class CustomersRepository:
     def print_all(self):
         print(self.get_all())
 
-    def get_by_id(self, customer_id: int) -> CustomersModel:
+    def get_by_id(self, customer_id: int, return_dict: bool = True):
         customer: CustomersModel | None = self.__session.get(self.__model, {'CustomerID': customer_id})
+        if return_dict:
+            cstmr = {
+                'Customer_id':  customer.CustomerID,
+                'Name':  customer.Name,
+                'SecondName':  customer.SecondName,
+                'Phone':  customer.Phone,
+                'Address':  customer.Address,
+                'Orders':  customer.Orders.filter(OrdersModel.CustomerID == customer.CustomerID).all()
+                }
+            return cstmr
         return customer
 
     def create_new(self, name: str, second_name: str, phone: str, address: str) -> bool:
@@ -40,6 +51,16 @@ class CustomersRepository:
 
         except:
             return False
+
+    def __repr__(self: CustomersModel):
+        return {
+            'Customer_id': self.CustomerID,
+            'Name': self.Name,
+            'SecondName': self.SecondName,
+            'Phone': self.Phone,
+            'Address': self.Address,
+            'Orders': self.Orders
+        }
 
 
 def __init__():

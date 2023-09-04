@@ -15,10 +15,9 @@ class OrdersModel(Base):
         result = {
             'OrderID': self.OrderID,
             'CustomerID': self.CustomerID,
-            'Goods': self.Goods,
-            'Customer': self.Customer}
+            'Goods': self.Goods}
 
-        return result
+        return result.__str__()
 
 
 class CustomersModel(Base):
@@ -29,22 +28,6 @@ class CustomersModel(Base):
     Address = Column(TEXT(100))
     CustomerID = Column(INTEGER, primary_key=True)
     Orders = relationship("OrdersModel", back_populates="order", lazy='dynamic')
-
-
-    def __repr__(self):
-        print(self.Orders)
-        result = {
-            'Customer_id': self.CustomerID,
-            'Name': self.Name,
-            'SecondName': self.SecondName,
-            'Phone': self.Phone,
-            'Address': self.Address,
-            'Orders': self.Orders
-        }
-
-        return result.__str__()
-
-
 
 
 
