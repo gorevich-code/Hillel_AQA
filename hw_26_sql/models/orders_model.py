@@ -1,7 +1,6 @@
 from sqlalchemy import Column, INTEGER, ForeignKey, TEXT
-from sqlalchemy.orm import declarative_base, relationship
-
-Base = declarative_base()
+from sqlalchemy.orm import relationship
+from .models_base import Base
 
 
 class OrdersModel(Base):
@@ -18,17 +17,3 @@ class OrdersModel(Base):
             'Goods': self.Goods}
 
         return result.__str__()
-
-
-class CustomersModel(Base):
-    __tablename__ = 'Customers'
-    Name = Column(TEXT(100))
-    SecondName = Column(TEXT(100))
-    Phone = Column(TEXT(100))
-    Address = Column(TEXT(100))
-    CustomerID = Column(INTEGER, primary_key=True)
-    Orders = relationship("OrdersModel", back_populates="order", lazy='dynamic')
-
-
-
-

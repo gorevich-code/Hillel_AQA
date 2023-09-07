@@ -1,4 +1,5 @@
-from Hillel_AQA_homeworks.hw_26_sql.models import CustomersModel, OrdersModel
+from Hillel_AQA_homeworks.hw_26_sql.models.customer_model import CustomersModel
+from Hillel_AQA_homeworks.hw_26_sql.models.orders_model import OrdersModel
 from Hillel_AQA_homeworks.hw_26_sql.session import session
 
 

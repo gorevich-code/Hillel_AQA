@@ -1,1 +1,2 @@
-from .models import CustomersModel, OrdersModel
+from .customer_model import CustomersModel
+from .orders_model import OrdersModel
