@@ -16,8 +16,23 @@ class Customers(db.Entity):
     class ObjectModel:
         def __init__(self, name, secondname, phone, address, customerid, orders):
             self.Name = name
-            self.SecondName =
-            self.Phone
+            self.SecondName = secondname
+            self.Phone = phone
+            self.Address = address
+            self.CustomerID = customerid
+            self.Orders = orders
+
+        def __repr__(self):
+            return (
+                f'\n\nName : {self.Name} '
+                f'\nSecond Name : {self.SecondName} '
+                f'\nPhone : {self.Phone} '
+                f'\nAddress : {self.Address} '
+                f'\nCustomerID : {self.CustomerID} '
+                f'\nOrders : {self.Orders}\n\n'
+            )
+
+
 
 
 
