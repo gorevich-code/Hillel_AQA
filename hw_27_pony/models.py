@@ -13,24 +13,26 @@ class Customers(db.Entity):
     CustomerID = PrimaryKey(int, auto=True, column='CustomerID')
     Orders = Set("Orders")
 
-    class ObjectModel:
-        def __init__(self, name, secondname, phone, address, customerid, orders):
-            self.Name = name
-            self.SecondName = secondname
-            self.Phone = phone
-            self.Address = address
-            self.CustomerID = customerid
-            self.Orders = orders
+    class CustomerData:
+        def __init__(self, Name, SecondName, Phone, Address, CustomerID, orders):
+            self.name=Name
+            self.secondname=SecondName,
+            self.phone=Phone,
+            self.address=Address,
+            self.customerid=CustomerID,
+            self.orders=orders
 
         def __repr__(self):
-            return (
-                f'\n\nName : {self.Name} '
-                f'\nSecond Name : {self.SecondName} '
-                f'\nPhone : {self.Phone} '
-                f'\nAddress : {self.Address} '
-                f'\nCustomerID : {self.CustomerID} '
-                f'\nOrders : {self.Orders}\n\n'
+            print(
+                f'\n\nName : {self.name} '
+                f'\nSecond Name : {self.secondname} '
+                f'\nPhone : {self.phone} '
+                f'\nAddress : {self.address} '
+                f'\nCustomerID : {self.customerid} '
+                f'\nOrders : {self.orders}\n\n'
             )
+
+
 
 
 
