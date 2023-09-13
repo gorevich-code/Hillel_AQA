@@ -6,7 +6,7 @@ class CustomersRepo:
     def __init__(self):
         self.model = Customers
 
-    def _process_data(self, data, return_dataclass=True):
+    def _process_data(self, data):
         if not hasattr(data, 'Name'):
             return None
         orders = f'No Orders from {data.Name} {data.SecondName}'
@@ -20,7 +20,6 @@ class CustomersRepo:
         c = Customers(Name=name, SecondName=secondname, Phone=phone, Address=address)
         c.flush()
         print('Recorded new customer. Customer ID %s', c.CustomerID)
-
 
     @db_session
     def get_all(self):
@@ -63,6 +62,6 @@ all = cr.get_all()
 for x in all:
     print(x.to_dict(), x.orders)
 
-cr.add_new_customer('Jack', 'Sparrow', 'iPhone', 'Ship')
+#cr.add_new_customer('Jack', 'Sparrow', 'iPhone', 'Ship')
 #cr.update_field_by_id(id=5, field_to_change='SecondName', new_value='Di Caprioooo')
 #cr.delete_by_id(7)
